@@ -10,25 +10,27 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
+import java.util.Random;
 
 public class CardGame {
-    private static final int CARDS_PER_PLAYER = 5;
+
+    private static final int CARDS_PER_PLAYER = 5; // Number of cards dealt to each player
 
     public static void main(String[] args) {
-        Deck deck = new Deck();
+        Deck deck = new Deck(); // Create and shuffle the deck
         LinkList shuffledDeck = deck.getDeck();
 
         // Deal cards to 2 players
         Card[] player1Hand = dealCards(shuffledDeck, CARDS_PER_PLAYER);
         Card[] player2Hand = dealCards(shuffledDeck, CARDS_PER_PLAYER);
 
-        // Display hands
+        // Display each player's hand
         System.out.println("Player 1's Hand:");
         displayHand(player1Hand);
         System.out.println("\nPlayer 2's Hand:");
         displayHand(player2Hand);
 
-        // Compare cards (simple highest-value card wins)
+        // Compare cards and determine the winner
         int player1Score = calculateHandScore(player1Hand);
         int player2Score = calculateHandScore(player2Hand);
 
@@ -42,7 +44,28 @@ public class CardGame {
         }
     }
 
+    
+     
+    private static Card[] dealCards(LinkList deck, int numCards) {
+        Card[] hand = new Card[numCards];
+        for (int i = 0; i < numCards; i++) {
+            hand[i] = deck.getFirst(); // Remove and return the first card from the deck
+        }
+        return hand;
+    }
 
-	}//end main
 
-}//end class
+    private static void displayHand(Card[] hand) {
+        for (Card card : hand) {
+            System.out.println(card);
+        }
+    }
+
+    private static int calculateHandScore(Card[] hand) {
+        int score = 0;
+        for (Card card : hand) {
+            score += card.getCardValue();
+        }
+        return score;
+    }
+}
