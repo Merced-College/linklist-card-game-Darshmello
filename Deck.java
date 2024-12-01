@@ -3,6 +3,7 @@ import java.util.Random;
 public class Deck {
     private LinkList cardDeck;
 
+    // Constructor
     public Deck() {
         cardDeck = new LinkList();
         initializeDeck();
@@ -13,11 +14,11 @@ public class Deck {
     private void initializeDeck() {
         String[] SUITS = {"Hearts", "Diamonds", "Clubs", "Spades"};
         String[] RANKS = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-        int[] VALUES = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}; // Values for cards
+        int[] VALUES = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
 
         for (String suit : SUITS) {
             for (int i = 0; i < RANKS.length; i++) {
-                Card card = new Card(suit, RANKS[i], VALUES[i], RANKS[i].toLowerCase() + suit.substring(0, 1).toLowerCase() + ".gif");
+                Card card = new Card(suit, RANKS[i], VALUES[i], RANKS[i].toLowerCase() + suit.charAt(0) + ".gif");
                 cardDeck.add(card);
             }
         }
@@ -30,8 +31,12 @@ public class Deck {
         int index = 0;
 
         // Transfer cards to an array
-        while (cardDeck.getFirst() != null) {
-            cardsArray[index++] = cardDeck.getFirst();
+        while (true) {
+            try {
+                cardsArray[index++] = cardDeck.getFirst();
+            } catch (IllegalStateException e) {
+                break;
+            }
         }
 
         // Shuffle the array
@@ -48,6 +53,7 @@ public class Deck {
         }
     }
 
+    // Get the shuffled deck
     public LinkList getDeck() {
         return cardDeck;
     }

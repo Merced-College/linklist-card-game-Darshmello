@@ -1,20 +1,6 @@
-//package linkedLists;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-import java.util.Scanner;
-
-
-import java.util.Random;
-
 public class CardGame {
 
-    private static final int CARDS_PER_PLAYER = 5; // Number of cards dealt to each player
+    private static final int CARDS_PER_PLAYER = 5;
 
     public static void main(String[] args) {
         Deck deck = new Deck(); // Create and shuffle the deck
@@ -44,8 +30,6 @@ public class CardGame {
         }
     }
 
-    
-     
     private static Card[] dealCards(LinkList deck, int numCards) {
         Card[] hand = new Card[numCards];
         for (int i = 0; i < numCards; i++) {
@@ -53,7 +37,6 @@ public class CardGame {
         }
         return hand;
     }
-
 
     private static void displayHand(Card[] hand) {
         for (Card card : hand) {
