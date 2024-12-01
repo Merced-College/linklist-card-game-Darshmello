@@ -12,55 +12,36 @@ import java.util.Scanner;
 
 
 public class CardGame {
-	
-	private static LinkList cardList = new LinkList();  // make list
+    private static final int CARDS_PER_PLAYER = 5;
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
+        Deck deck = new Deck();
+        LinkList shuffledDeck = deck.getDeck();
 
-		// File name to read from
-        String fileName = "cards.txt"; // Ensure the file is in the working directory or specify the full path
+        // Deal cards to 2 players
+        Card[] player1Hand = dealCards(shuffledDeck, CARDS_PER_PLAYER);
+        Card[] player2Hand = dealCards(shuffledDeck, CARDS_PER_PLAYER);
 
-        // Read the file and create Card objects
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                // Split the line into components
-                String[] details = line.split(","); // Assuming comma-separated values
-                if (details.length == 4) {
-                    // Parse card details
-                    String suit = details[0].trim();
-                    String name = details[1].trim();
-                    int value = Integer.parseInt(details[2].trim());
-                    String pic = details[3].trim();
+        // Display hands
+        System.out.println("Player 1's Hand:");
+        displayHand(player1Hand);
+        System.out.println("\nPlayer 2's Hand:");
+        displayHand(player2Hand);
 
-                    // Create a new Card object
-                    Card card = new Card(suit, name, value, pic);
+        // Compare cards (simple highest-value card wins)
+        int player1Score = calculateHandScore(player1Hand);
+        int player2Score = calculateHandScore(player2Hand);
 
-                    // Add the Card object to the list
-                    cardList.add(card);
-                } else {
-                    System.err.println("Invalid line format: " + line);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+        System.out.println("\nGame Result:");
+        if (player1Score > player2Score) {
+            System.out.println("Player 1 Wins with a score of " + player1Score);
+        } else if (player2Score > player1Score) {
+            System.out.println("Player 2 Wins with a score of " + player2Score);
+        } else {
+            System.out.println("It's a tie with both players scoring " + player1Score);
         }
+    }
 
-        // Print the loaded cards
-        System.out.println("Cards loaded:");
-        cardList.displayList();
-		
-		Card[] playerHand = new Card[5];
-		for(int i = 0; i < playerHand.length; i++)
-			playerHand[i] = cardList.getFirst();
-		
-		System.out.println("players hand");
-		for(int i = 0; i < playerHand.length; i++)
-			System.out.println(playerHand[i]);
-		
-		System.out.println();
-		System.out.println("the deck");
-		cardList.displayList();
 
 	}//end main
 
